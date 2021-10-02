@@ -18,3 +18,5 @@ próxima e então calcular o ângulo theta entre o robô e o centro da caixa que
 utilizado para rotacionar a frente do robô em direção à caixa.
 
 ![Esquema](Atv1-TrajetoriaRobo/docs/definicao_theta.png "Ideia Base do algoritmo")
+
+Obs: Note que os eixos dispostos na imagem seguem o padrão de crescimento do WeBots.
