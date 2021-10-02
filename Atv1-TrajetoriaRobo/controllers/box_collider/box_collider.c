@@ -198,58 +198,87 @@ double convert_heading_in_degrees(double heading_in_rad){
 *
 * @param robot_coord Array com o posicionamento do robô já convertido para cartesiano.
 * @param boxes Matriz de dimensões conhecidas e contém as posições X
-*              e Z das caixas e também um status por caixa, que varia entre
+*              e Y das caixas.
+* @param visited_boxes Array contendo status das caixas, que varia entre
 *              0: Não visitada e 1: Visitada.
+*
+* @return int índice da matriz com as coordenadas da caixa alvo mais próxima.
 */
 int get_min_distance_box_info(const double robot_coord[2], double boxes[9][2], int visited_boxes[9]){
-  int i = 0;
-  double min_distance = 1000;
-  double temp = 0.0;
-  int caixa_alvo = 0;
-  printf("Caixas visitadas\n");
-  for (i = 0; i < 9; i++){
-    printf("--->Caixa %d: %d\n",i,visited_boxes[i]);
+  		   int i = 0;
+  		   double min_distance = 1000;
+		   double temp = 0.0;
+		   int caixa_alvo = 0;
+		   printf("Caixas visitadas\n");
+		   for (i = 0; i < 9; i++){
+		   		printf("--->Caixa %d: %d\n",i,visited_boxes[i]);
 
-    // Caixa não foi visitada, pode ser considera na descoberta de menor distância.
-    if(visited_boxes[i] == 0){
-      // Fórmula de distância entre dois pontos.
-			temp = calculate_distance(robot_coord, boxes[i]);
-      if (temp <= min_distance){
-        min_distance = temp;
-        // Salva a caixa que possui a menor distância.
-        caixa_alvo = i;
-        
-      }
-    } 
-  }
-  return caixa_alvo;
+		   		// Caixa não foi visitada, pode ser considera na descoberta de menor distância.
+		   		if(visited_boxes[i] == 0){
+		   			// Fórmula de distância entre dois pontos.
+			  		temp = calculate_distance(robot_coord, boxes[i]);
+			  		if (temp <= min_distance){
+			  			min_distance = temp;
+						// Salva a caixa que possui a menor distância.
+						caixa_alvo = i;
+			  		}
+				} 
+		   }
+		   return caixa_alvo;
 }
 
 //==========================//
 //          MOTORES         //
 //==========================//
 
+/*
+ * Função que define velocidade 0 à ambos motores.
+ * Fazendo o robô parar.
+ */
 void motor_stop(){
 	wb_motor_set_velocity(left_motor, 0);
 	wb_motor_set_velocity(right_motor, 0);
 }
 
+/*
+ * Função que define velocidade máxima à ambos motores.
+ * Fazendo que o robô vá para frente.
+ */
 void motor_move_forward(){
 	wb_motor_set_velocity(left_motor, MAX_SPEED);
 	wb_motor_set_velocity(right_motor, MAX_SPEED);
 }
 
+/*
+ * Função que define velocidade negativa máxima ao motor esquerdo
+ * e vlocidade positiva máxima ao motor direito.
+ * Fazendo que o robô rode (em seu próprio eixo) para a esqueda.
+ */
 void motor_rotate_left(){
 	wb_motor_set_velocity(left_motor, -MAX_SPEED);
 	wb_motor_set_velocity(right_motor, MAX_SPEED);
 }
 
+/*
+ * Função que define velocidade positiva máxima ao motor esquerdo
+ * e vlocidade negativa máxima ao motor direito.
+ * Fazendo que o robô rode (em seu próprio eixo) para a direita.
+ */
 void motor_rotate_right(){
 	wb_motor_set_velocity(left_motor, MAX_SPEED);
 	wb_motor_set_velocity(right_motor, -MAX_SPEED);
 }
 
-
+/*
+ * Direciona o robô para a caixa alvo.
+ * Define qual a rotação deve ser empregada pelo robô
+ * a fim que a caixa alvo seja alcançada.
+ *
+ * @param theta Ângulo que o robô deve girar para que a diferença entre
+ * direção do robô e o ângulo entre robô caixa seja zerado.
+ * @param time_step Tempo da simulação.
+ *
+ */
 void rotate_to_box(const double theta, int time_step){
 	if (!is_cartesian_theta_equal(theta,0)){
 		double duration = abs(theta) / ROBOT_ANGULAR_SPEED_IN_DEGREES;
@@ -267,6 +296,14 @@ void rotate_to_box(const double theta, int time_step){
 	}
 }
 
+/*
+ * Realiza o deslocamento em linha reta.
+ * A partir da distância, o robô desloca-se em linha reta
+ * e sem interrupção.
+ *
+ * @param distance Distância entre o robô e a caixa alvo.
+ * @param time_step Tempo da simulação.
+ */
 void move_forward(double distance, int time_step){
 	double duration = (distance/2) / TANGENSIAL_SPEED;
  	printf("Duração até o destino: %4.4f\n", duration);
@@ -282,6 +319,14 @@ void move_forward(double distance, int time_step){
 
 }
 
+/*
+ * Função utilitária para mover o robô conforme a necessidade.
+ * Toda a movimentação dessa função é realizada de maneira
+ * ininterrupta.
+ *
+ * @param distance Distância (ou ângulo) que deverá ser percorrida (girado).
+ * @param option Opção de movimentação (1: frente, 2: esquerda, 3: direita).
+ */
 void move_robot_special(double distance, int option){
            double duration = 0.0;
            if (option == 1){
@@ -313,6 +358,9 @@ void move_robot_special(double distance, int option){
 //     CÓDIGO PRINCIPAL     //
 //==========================//
 
+/*
+ * Retorna o tempo da simulação.
+ */ 
 int get_time_step(){
 	static int time_step = -1;
 	if (time_step == -1)
@@ -346,11 +394,11 @@ void init(){
 	wb_motor_set_velocity(right_motor, 0.0);
 
 	// Mapeia o robô através do supervisor
-           robot_node = wb_supervisor_node_get_from_def("e-Puck");
-           // Translação do robô (x,y,z)
-           trans_field = wb_supervisor_node_get_proto_field(robot_node, "translation");
-           // Rotação do robô (x,y,z,ângulo)
-           rotac_field = wb_supervisor_node_get_proto_field(robot_node, "rotation");
+    robot_node = wb_supervisor_node_get_from_def("e-Puck");
+    // Translação do robô (x,y,z)
+    trans_field = wb_supervisor_node_get_proto_field(robot_node, "translation");
+    // Rotação do robô (x,y,z,ângulo)
+    rotac_field = wb_supervisor_node_get_proto_field(robot_node, "rotation");
           
 }
 
