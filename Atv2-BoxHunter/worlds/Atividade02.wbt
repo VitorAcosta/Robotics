@@ -1,0 +1,89 @@
+#VRML_SIM R2021b utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.5805338901013022 0.5728659131575167 0.5786234077412127 2.098288794534808
+  position 0.015800396034512942 1.886377816903378 -0.05878277023861604
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+RectangleArena {
+  floorTileSize 0.075 0.075
+  wallHeight 0.045
+}
+DEF e-Puck E-puck {
+  translation 0.4000000000015862 -6.396643211968589e-05 0.3999999999937852
+  rotation 0 1 0 3.141592653589793
+  controller "box_hunter_controller"
+  supervisor TRUE
+  turretSlot [
+    Compass {
+    }
+    GPS {
+    }
+  ]
+}
+DEF Caixa4 WoodenBox {
+  translation 0 0.025 0
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  size 0.1 0.05 0.1
+}
+DEF Caixa7 WoodenBox {
+  translation 0.25 0.025 0
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(1)"
+  size 0.1 0.05 0.1
+}
+DEF Caixa1 WoodenBox {
+  translation -0.25 0.025 0
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(2)"
+  size 0.1 0.05 0.1
+  mass 0.01
+}
+DEF Caixa3 WoodenBox {
+  translation 0 0.025 0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(3)"
+  size 0.1 0.05 0.1
+}
+DEF Caixa5 WoodenBox {
+  translation 0 0.025 -0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(4)"
+  size 0.1 0.05 0.1
+  mass 0.01
+}
+DEF Caixa6 WoodenBox {
+  translation 0.25 0.025 0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(5)"
+  size 0.1 0.05 0.1
+  mass 0.01
+}
+DEF Caixa8 WoodenBox {
+  translation 0.25 0.025 -0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(6)"
+  size 0.1 0.05 0.1
+}
+DEF Caixa0 WoodenBox {
+  translation -0.25 0.025 0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(7)"
+  size 0.1 0.05 0.1
+}
+DEF Caixa2 WoodenBox {
+  translation -0.25 0.025 -0.25
+  rotation 1.039168419906828e-12 1 -7.18417276126582e-12 -4.7129640584513686e-05
+  name "wooden box(8)"
+  size 0.1 0.05 0.1
+}
