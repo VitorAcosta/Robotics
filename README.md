@@ -22,7 +22,7 @@ utilizado para rotacionar a frente do robô em direção à caixa.
 Obs: Note que os eixos dispostos na imagem seguem o padrão de crescimento do WeBots.
 
 
-# Atividade 2 - Robô caixa bloco
+# Atividade 2 - Robô caça bloco
 A atividade 2 tem como objetivo definir um algoritmo o qual o robô seja capaz
 de deslocar-se pelo cenário e encostar, pelo menos uma vez, em cada caixa disposta do cenário.
 A diferença é que: algumas das caixas inseridas no cenário são leves, e portanto podem deslocar-se
