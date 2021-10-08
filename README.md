@@ -39,6 +39,8 @@ As mesmas premissas da atividade 1 foram aqui consideradas, com a adição de um
 O algoritmo ainda segue a mesma base abordada na atividade 1, com a diferença de que:
  * Para adquirir a posição do robô, utiliza-se o GPS.
  * Para verificar o norte do robô, utiliza-se a bússola (ou compass).
+
+
 Essas adições foram imprescidíveis para a conclusão do laboratório, uma vez que os valores
 adquiridos pelos módulos possibilita a redução de erro na tomada de decisão, quando comparado
 com o método utilizado no laboratório 1, o supervisor.
