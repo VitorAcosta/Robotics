@@ -153,6 +153,15 @@ double getRobotBearing()
 //TRATAMENTO DE CAIXAS LEVES//
 //==========================//
 
+/*
+ * Função que verifica se a caixa colidida é leve.
+ * 
+ * @param target Caixa alvo. Índice (linha) da Matriz de caixas.
+ * @param current_coords Coordenadas cartesianas da caixa alvo
+ * que foi encostada.
+ *
+ * @return bool
+ */
 bool target_box_moved(int target, const double current_coords[2]){
   double x_diff = fabs(current_coords[0] - boxes[target][0]);
   double y_diff = fabs(current_coords[1] - boxes[target][1]);
